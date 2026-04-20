@@ -1,0 +1,90 @@
+=== STOP: No Centroid Change ===
+============================================================
+  HW3 Task 1 — K-Means Clustering
+  Author : Brijesh Kumar
+============================================================
+
+Data shape : (9999, 784)   K = 10
+Pixel range: [0.0, 255.0]  mean=33.79  std=79.17
+
+=== Running metric: euclidean ===
+  SSE=5.578417e+06  iters=101  time=2.790s  acc=0.4667
+  Cluster→label map: {0: np.int64(2), 1: np.int64(1), 2: np.int64(2), 3: np.int64(0), 4: np.int64(3)} ...
+
+=== Running metric: cosine ===
+  SSE=3.058995e+03  iters=123  time=3.801s  acc=0.5989
+  Cluster→label map: {0: np.int64(0), 1: np.int64(5), 2: np.int64(4), 3: np.int64(2), 4: np.int64(8)} ...
+
+=== Running metric: jaccard ===
+  SSE=3.660268e+03  iters=42  time=7.764s  acc=0.6008
+  Cluster→label map: {0: np.int64(2), 1: np.int64(3), 2: np.int64(1), 3: np.int64(6), 4: np.int64(9)} ...
+
+
+Full Results Table:
+   metric    final_SSE  iters   time_s  accuracy
+euclidean 5.578417e+06    101 2.789854  0.466747
+   cosine 3.058995e+03    123 3.800631  0.598860
+  jaccard 3.660268e+03     42 7.763671  0.600760
+
+Saved → results/q4_nochange/kmeans_summary.csv
+Saved → results/q4_nochange/sse_vs_iter.png
+=== STOP: SSE Increase ===
+============================================================
+  HW3 Task 1 — K-Means Clustering
+  Author : Brijesh Kumar
+============================================================
+
+Data shape : (9999, 784)   K = 10
+Pixel range: [0.0, 255.0]  mean=33.79  std=79.17
+
+=== Running metric: euclidean ===
+  SSE=5.578417e+06  iters=500  time=13.819s  acc=0.4667
+  Cluster→label map: {0: np.int64(2), 1: np.int64(1), 2: np.int64(2), 3: np.int64(0), 4: np.int64(3)} ...
+
+=== Running metric: cosine ===
+  SSE=3.071928e+03  iters=30  time=0.900s  acc=0.5459
+  Cluster→label map: {0: np.int64(0), 1: np.int64(5), 2: np.int64(4), 3: np.int64(2), 4: np.int64(8)} ...
+
+=== Running metric: jaccard ===
+  SSE=3.660196e+03  iters=31  time=5.537s  acc=0.5986
+  Cluster→label map: {0: np.int64(2), 1: np.int64(3), 2: np.int64(1), 3: np.int64(6), 4: np.int64(9)} ...
+
+
+Full Results Table:
+   metric    final_SSE  iters    time_s  accuracy
+euclidean 5.578417e+06    500 13.818536  0.466747
+   cosine 3.071928e+03     30  0.899729  0.545855
+  jaccard 3.660196e+03     31  5.536702  0.598560
+
+Saved → results/q4_sse_increase/kmeans_summary.csv
+Saved → results/q4_sse_increase/sse_vs_iter.png
+=== STOP: Max Iter = 100 ===
+============================================================
+  HW3 Task 1 — K-Means Clustering
+  Author : Brijesh Kumar
+============================================================
+
+Data shape : (9999, 784)   K = 10
+Pixel range: [0.0, 255.0]  mean=33.79  std=79.17
+
+=== Running metric: euclidean ===
+  SSE=5.578417e+06  iters=100  time=2.843s  acc=0.4667
+  Cluster→label map: {0: np.int64(2), 1: np.int64(1), 2: np.int64(2), 3: np.int64(0), 4: np.int64(3)} ...
+
+=== Running metric: cosine ===
+  SSE=3.058826e+03  iters=100  time=3.059s  acc=0.5933
+  Cluster→label map: {0: np.int64(0), 1: np.int64(5), 2: np.int64(4), 3: np.int64(2), 4: np.int64(8)} ...
+
+=== Running metric: jaccard ===
+  SSE=3.660268e+03  iters=100  time=19.004s  acc=0.6008
+  Cluster→label map: {0: np.int64(2), 1: np.int64(3), 2: np.int64(1), 3: np.int64(6), 4: np.int64(9)} ...
+
+
+Full Results Table:
+   metric    final_SSE  iters    time_s  accuracy
+euclidean 5.578417e+06    100  2.842935  0.466747
+   cosine 3.058826e+03    100  3.058613  0.593259
+  jaccard 3.660268e+03    100 19.004193  0.600760
+
+Saved → results/q4_maxiter/kmeans_summary.csv
+Saved → results/q4_maxiter/sse_vs_iter.png

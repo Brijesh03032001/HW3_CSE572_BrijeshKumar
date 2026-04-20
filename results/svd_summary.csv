@@ -1,0 +1,2 @@
+model,params,rmse_mean,rmse_std,mae_mean,mae_std
+SVD_best,"{'n_factors': 50, 'lr_all': 0.005, 'reg_all': 0.05}",0.8903696585981813,0.004121995737198726,0.6859895862054075,0.0033566992871235197

@@ -1,0 +1,13 @@
+# PDFs — excluded from repo
+*.pdf
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Numpy binary files
+*.npy
+
+# Virtual env (kept at parent level)
+homew3/

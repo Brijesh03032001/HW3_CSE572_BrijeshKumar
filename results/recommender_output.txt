@@ -1,0 +1,90 @@
+============================================================
+  HW3 Task 2 — Recommender Systems
+  Author : Brijesh Kumar
+============================================================
+
+Loaded ratings : (100004, 3)
+CV folds       : 5
+
+=== Step 1: SVD GridSearchCV (PMF tuning) ===
+GridSearch done in 3.6s
+Best RMSE   : 0.8900
+Best params : {'n_factors': 50, 'lr_all': 0.005, 'reg_all': 0.05}
+
+Evaluating: SVD/PMF (best) {'n_factors': 50, 'lr_all': 0.005, 'reg_all': 0.05}  (5-fold CV) ...
+  SVD/PMF (best) {'n_factors': 50, 'lr_all': 0.005, 'reg_all': 0.05}: RMSE = 0.8904 ± 0.0041  MAE = 0.6860 ± 0.0034
+Saved → results/svd_gridsearch_raw.csv
+
+=== Step 2: SVD Default Baseline ===
+
+Evaluating: SVD/PMF (default)  (5-fold CV) ...
+  SVD/PMF (default): RMSE = 0.8969 ± 0.0037  MAE = 0.6909 ± 0.0031
+
+=== Step 3: Similarity Metric Sweep (K=40) ===
+
+Evaluating: User-CF (cosine)  (5-fold CV) ...
+  User-CF (cosine): RMSE = 0.9931 ± 0.0025  MAE = 0.7671 ± 0.0032
+
+Evaluating: Item-CF (cosine)  (5-fold CV) ...
+  Item-CF (cosine): RMSE = 0.9951 ± 0.0064  MAE = 0.7748 ± 0.0052
+
+Evaluating: User-CF (msd)  (5-fold CV) ...
+  User-CF (msd): RMSE = 0.9678 ± 0.0024  MAE = 0.7437 ± 0.0032
+
+Evaluating: Item-CF (msd)  (5-fold CV) ...
+  Item-CF (msd): RMSE = 0.9346 ± 0.0059  MAE = 0.7210 ± 0.0052
+
+Evaluating: User-CF (pearson)  (5-fold CV) ...
+  User-CF (pearson): RMSE = 0.9983 ± 0.0027  MAE = 0.7731 ± 0.0033
+
+Evaluating: Item-CF (pearson)  (5-fold CV) ...
+  Item-CF (pearson): RMSE = 0.9891 ± 0.0063  MAE = 0.7685 ± 0.0043
+Saved → results/similarity_results.csv
+Saved → results/similarity_comparison.png
+
+=== Step 4: K-Neighbours Sweep (cosine similarity) ===
+
+Evaluating: User-CF (cosine) k=5  (5-fold CV) ...
+  User-CF (cosine) k=5: RMSE = 1.0440 ± 0.0037  MAE = 0.8050 ± 0.0041
+
+Evaluating: Item-CF (cosine) k=5  (5-fold CV) ...
+  Item-CF (cosine) k=5: RMSE = 1.1009 ± 0.0053  MAE = 0.8596 ± 0.0035
+
+Evaluating: User-CF (cosine) k=10  (5-fold CV) ...
+  User-CF (cosine) k=10: RMSE = 1.0091 ± 0.0028  MAE = 0.7771 ± 0.0034
+
+Evaluating: Item-CF (cosine) k=10  (5-fold CV) ...
+  Item-CF (cosine) k=10: RMSE = 1.0508 ± 0.0075  MAE = 0.8212 ± 0.0051
+
+Evaluating: User-CF (cosine) k=20  (5-fold CV) ...
+  User-CF (cosine) k=20: RMSE = 0.9966 ± 0.0028  MAE = 0.7682 ± 0.0035
+
+Evaluating: Item-CF (cosine) k=20  (5-fold CV) ...
+  Item-CF (cosine) k=20: RMSE = 1.0171 ± 0.0060  MAE = 0.7941 ± 0.0050
+
+Evaluating: User-CF (cosine) k=40  (5-fold CV) ...
+  User-CF (cosine) k=40: RMSE = 0.9931 ± 0.0025  MAE = 0.7671 ± 0.0032
+
+Evaluating: Item-CF (cosine) k=40  (5-fold CV) ...
+  Item-CF (cosine) k=40: RMSE = 0.9951 ± 0.0064  MAE = 0.7748 ± 0.0052
+
+Evaluating: User-CF (cosine) k=80  (5-fold CV) ...
+  User-CF (cosine) k=80: RMSE = 0.9937 ± 0.0022  MAE = 0.7693 ± 0.0031
+
+Evaluating: Item-CF (cosine) k=80  (5-fold CV) ...
+  Item-CF (cosine) k=80: RMSE = 0.9808 ± 0.0063  MAE = 0.7623 ± 0.0056
+Saved → results/k_sweep.csv
+Saved → results/k_sweep.png
+  Best K for user-CF : K=40  (RMSE=0.9931)
+  Best K for item-CF : K=80  (RMSE=0.9808)
+
+Saved → results/final_summary.csv
+
+Final Summary:
+           model                                              params  rmse_mean  rmse_std  mae_mean  mae_std
+  SVD_best (PMF) {'n_factors': 50, 'lr_all': 0.005, 'reg_all': 0.05}   0.890370  0.004122  0.685990 0.003357
+best_CF_item_msd                                                k=40   0.934569  0.005910  0.721045 0.005225
+
+All experiments completed in 122.8s
+Results saved in: results
+Files: ['k_sweep.csv', 'sse_history_cosine.npy', 'similarity_results.csv', 'svd_summary.csv', 'kmeans_output.txt', 'sse_vs_iter.png', 'sse_history_jaccard.npy', 'kmeans_summary.csv', 'similarity_comparison.png', 'final_summary.csv', 'k_sweep.png', 'recommender_output.txt', 'svd_gridsearch_raw.csv', 'sse_history_euclidean.npy']
