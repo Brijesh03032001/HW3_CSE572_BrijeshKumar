@@ -11,3 +11,4 @@ __pycache__/
 
 # Virtual env (kept at parent level)
 homew3/
+generate_report.py
