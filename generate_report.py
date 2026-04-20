@@ -43,11 +43,11 @@ def S(name, **kw):
 TITLE   = S("Title2",   fontSize=22, textColor=WHITE,    alignment=TA_CENTER, fontName="Helvetica-Bold", spaceAfter=4)
 SUBTITLE= S("Sub",      fontSize=12, textColor=LBLUE,    alignment=TA_CENTER, fontName="Helvetica",      spaceAfter=2)
 SECTION = S("Section",  fontSize=14, textColor=WHITE,    alignment=TA_LEFT,   fontName="Helvetica-Bold", spaceBefore=4, spaceAfter=4, leftIndent=6)
-QHEAD   = S("QHead",    fontSize=12, textColor=DBLUE,    fontName="Helvetica-Bold", spaceBefore=10, spaceAfter=4)
-BODY    = S("Body2",    fontSize=10, textColor=colors.black, fontName="Helvetica",  spaceBefore=3,  spaceAfter=3, leading=15, alignment=TA_JUSTIFY)
-BULLET  = S("Bullet2",  fontSize=10, textColor=colors.black, fontName="Helvetica",  spaceBefore=2,  spaceAfter=2, leading=14, leftIndent=16, bulletIndent=6)
-CAPTION = S("Caption",  fontSize=9,  textColor=DGRAY,    fontName="Helvetica-Oblique", alignment=TA_CENTER, spaceBefore=2, spaceAfter=8)
-NOTE    = S("Note",     fontSize=9,  textColor=DGRAY,    fontName="Helvetica-Oblique", spaceBefore=2, spaceAfter=6)
+QHEAD   = S("QHead",    fontSize=12, textColor=DBLUE,    fontName="Helvetica-Bold", spaceBefore=6, spaceAfter=2)
+BODY    = S("Body2",    fontSize=10, textColor=colors.black, fontName="Helvetica",  spaceBefore=2,  spaceAfter=2, leading=14, alignment=TA_JUSTIFY)
+BULLET  = S("Bullet2",  fontSize=10, textColor=colors.black, fontName="Helvetica",  spaceBefore=1,  spaceAfter=1, leading=13, leftIndent=16, bulletIndent=6)
+CAPTION = S("Caption",  fontSize=9,  textColor=DGRAY,    fontName="Helvetica-Oblique", alignment=TA_CENTER, spaceBefore=1, spaceAfter=4)
+NOTE    = S("Note",     fontSize=9,  textColor=DGRAY,    fontName="Helvetica-Oblique", spaceBefore=1, spaceAfter=3)
 FOOTER  = S("Footer",   fontSize=8,  textColor=DGRAY,    alignment=TA_CENTER, fontName="Helvetica")
 
 # ── Helper builders ───────────────────────────────────────────────────────────
@@ -88,7 +88,7 @@ def img(path, width=6.5*inch):
         return Image(path, width=width, height=width * aspect)
     return body(f"[Image not found: {path}]")
 
-def spacer(h=0.15):
+def spacer(h=0.08):
     return Spacer(1, h * inch)
 
 def hr():
@@ -267,21 +267,21 @@ def build_pdf():
         ("LEFTPADDING",  (0,0),(-1,-1), 20),
         ("RIGHTPADDING", (0,0),(-1,-1), 20),
     ]))
-    story += [cover_tbl, spacer(0.3)]
+    story += [cover_tbl, spacer(0.2)]
 
     # ── Dataset overview ──────────────────────────────────────────────────────
     story += [
         body("<b>Dataset Overview:</b> Task 1 uses a 10,000-sample MNIST-like image dataset "
              "(784 pixel features, 10 classes). Task 2 uses the MovieLens small dataset "
              "(100,004 ratings, 671 users, 9,066 movies, ratings 0.5–5.0)."),
-        spacer(0.1),
+        spacer(0.05),
         hr(),
     ]
 
     # ══════════════════════════════════════════════════════════════════════════
     # TASK 1
     # ══════════════════════════════════════════════════════════════════════════
-    story += [section_banner("TASK 1 — K-Means Clustering from Scratch"), spacer(0.15)]
+    story += [section_banner("TASK 1 — K-Means Clustering from Scratch"), spacer(0.08)]
 
     story += [
         body("K-Means was implemented from scratch using three distance metrics: "
@@ -289,7 +289,6 @@ def build_pdf():
              "<b>1 − Generalized Jaccard similarity</b>.  K-Means++ initialization "
              "was used with 5 random restarts; the run with the lowest SSE was selected. "
              "K = 10 (number of unique class labels)."),
-        spacer(0.1),
     ]
 
     # ── Q1 ────────────────────────────────────────────────────────────────────
@@ -299,7 +298,7 @@ def build_pdf():
              "Note: Euclidean SSE is naturally larger in magnitude because it operates on "
              "standardized 784-dimensional vectors; Cosine and Jaccard SSEs are computed "
              "on their respective normalized spaces."),
-        spacer(0.05),
+        spacer(0.04),
         styled_table(
             ["Metric", "Final SSE", "Normalized Scale"],
             [["Euclidean", "5.578 × 10⁶", "Large (magnitude-based)"],
@@ -307,12 +306,11 @@ def build_pdf():
              ["Jaccard",   "3.660 × 10³", "Small (overlap-based)"]],
             col_widths=[2.3*inch, 2.3*inch, 2.4*inch],
         ),
-        spacer(0.08),
+        spacer(0.04),
         body("<b>Conclusion:</b> Jaccard achieves the best (most compact) cluster structure "
              "in its normalized feature space. Cosine is second-best. Euclidean, while "
              "showing the largest absolute SSE, suffers from the curse of dimensionality "
              "in 784-D space."),
-        spacer(0.1),
     ]
 
     # ── Q2 ────────────────────────────────────────────────────────────────────
@@ -320,7 +318,7 @@ def build_pdf():
         q_header("Q2 — Clustering Accuracy via Majority Vote  (10 pts)"),
         body("Each cluster was labeled using the majority class of its members. "
              "Predicted labels were compared against true labels to compute accuracy."),
-        spacer(0.05),
+        spacer(0.04),
         styled_table(
             ["Metric", "Accuracy", "Rank"],
             [["Euclidean", "0.4667", "3rd"],
@@ -329,19 +327,18 @@ def build_pdf():
             col_widths=[2.3*inch, 2.3*inch, 2.4*inch],
             highlight_last=True,
         ),
-        spacer(0.08),
+        spacer(0.04),
         body("<b>Conclusion:</b> <b>Jaccard</b> achieves the highest accuracy (~0.60). "
              "Its overlap-based similarity captures pixel intensity patterns better than "
              "magnitude-based (Euclidean) or pure direction-based (Cosine) metrics on "
              "non-negative image data."),
-        spacer(0.1),
     ]
 
     # ── Q1/Q2/Q3 combined plot ────────────────────────────────────────────────
     story += [
+        spacer(0.04),
         img(q1q2q3_plot, width=7.0*inch),
         caption("Figure 1 — Summary of SSE, Accuracy, Iterations, and Time for all three metrics."),
-        spacer(0.1),
     ]
 
     # ── Q3 ────────────────────────────────────────────────────────────────────
@@ -349,7 +346,7 @@ def build_pdf():
         q_header("Q3 — Convergence Under Combined Stop Criteria  (10 pts)"),
         body("Stop criteria used: <i>no centroid change</i> <b>OR</b> <i>SSE increases</i> "
              "<b>OR</b> <i>maximum 500 iterations reached</i>."),
-        spacer(0.05),
+        spacer(0.04),
         styled_table(
             ["Metric", "Iterations", "Time (s)", "Accuracy"],
             [["Euclidean", "101",  "3.08",  "0.4667"],
@@ -357,7 +354,7 @@ def build_pdf():
              ["Jaccard",   "31",   "5.87",  "0.5986"]],
             col_widths=[1.75*inch, 1.75*inch, 1.75*inch, 1.75*inch],
         ),
-        spacer(0.08),
+        spacer(0.04),
         body("<b>Conclusion:</b>"),
         bullet("<b>Most iterations:</b> Euclidean (101) — slowest to converge because "
                "arithmetic-mean centroid updates are not aligned with the Euclidean gradient in "
@@ -366,10 +363,9 @@ def build_pdf():
                "iteration is heavier due to pairwise min/max operations over 784 features."),
         bullet("<b>Fastest overall:</b> Cosine — vectorized dot-product operations converge "
                "in just 30 iterations with minimal per-iteration cost."),
-        spacer(0.08),
+        spacer(0.04),
         img(sse_plot, width=7.0*inch),
         caption("Figure 2 — SSE convergence curves for all three metrics (log scale)."),
-        spacer(0.1),
     ]
 
     story.append(PageBreak())
@@ -377,13 +373,10 @@ def build_pdf():
     # ── Q4 ────────────────────────────────────────────────────────────────────
     story += [
         section_banner("TASK 1 (continued) — Q4 & Q5"),
-        spacer(0.15),
+        spacer(0.08),
         q_header("Q4 — SSE Under Three Separate Termination Conditions  (10 pts)"),
         body("K-Means was run three separate times, each with only one termination condition active:"),
-        spacer(0.05),
-    ]
-
-    story += [
+        spacer(0.04),
         styled_table(
             ["Metric", "No Centroid Change", "SSE Increase", "Max Iter = 100"],
             [["Euclidean", "5.578 × 10⁶", "5.578 × 10⁶", "5.578 × 10⁶"],
@@ -391,10 +384,7 @@ def build_pdf():
              ["Jaccard",   "3.660 × 10³", "3.660 × 10³", "3.660 × 10³"]],
             col_widths=[1.6*inch, 1.8*inch, 1.8*inch, 1.8*inch],
         ),
-        spacer(0.08),
-    ]
-
-    story += [
+        spacer(0.04),
         body("<b>Analysis:</b>"),
         bullet("<b>No Centroid Change:</b> Runs until full convergence — produces the lowest "
                "achievable SSE for each metric. Cosine needs 123 iterations to satisfy this "
@@ -410,10 +400,9 @@ def build_pdf():
         bullet("<b>Key insight:</b> All three stop conditions yield identical SSEs for "
                "Euclidean and Jaccard. For Cosine, the 'SSE Increase' rule stops one "
                "step early and gives a marginally worse result."),
-        spacer(0.1),
+        spacer(0.04),
         img(q4_plot, width=7.0*inch),
         caption("Figure 3 — Final SSE comparison under three separate termination conditions."),
-        spacer(0.1),
     ]
 
     # ── Q5 ────────────────────────────────────────────────────────────────────
@@ -434,7 +423,7 @@ def build_pdf():
                "'Max iter' is safe when the limit exceeds natural convergence."),
         bullet("<b>K-Means++ initialisation</b> consistently reduces sensitivity to random seeds "
                "and leads to faster convergence compared to random initialisation."),
-        spacer(0.1),
+        spacer(0.04),
         hr(),
     ]
 
@@ -443,7 +432,7 @@ def build_pdf():
     # ══════════════════════════════════════════════════════════════════════════
     # TASK 2
     # ══════════════════════════════════════════════════════════════════════════
-    story += [section_banner("TASK 2 — Recommender Systems (Matrix Data)"), spacer(0.15)]
+    story += [section_banner("TASK 2 — Recommender Systems (Matrix Data)"), spacer(0.08)]
 
     story += [
         body("A movie recommender system was built using the MovieLens small dataset "
@@ -453,7 +442,6 @@ def build_pdf():
              "User-based Collaborative Filtering (User-CF), and "
              "Item-based Collaborative Filtering (Item-CF) using the "
              "<b>scikit-surprise</b> library with <b>5-fold cross-validation</b>."),
-        spacer(0.1),
     ]
 
     # ── 2c ────────────────────────────────────────────────────────────────────
@@ -462,7 +450,7 @@ def build_pdf():
         body("All models were evaluated using 5-fold cross-validation. "
              "MAE (Mean Absolute Error) measures average prediction error; "
              "RMSE (Root Mean Squared Error) penalises large errors more heavily."),
-        spacer(0.05),
+        spacer(0.04),
         styled_table(
             ["Model", "Avg RMSE", "Avg MAE"],
             [["SVD / PMF (best params)", "0.8904 ± 0.0041", "0.6860 ± 0.0034"],
@@ -475,7 +463,6 @@ def build_pdf():
              ["Item-CF (Pearson, K=40)", "0.9891 ± 0.0063", "0.7685 ± 0.0043"]],
             col_widths=[3.0*inch, 2.0*inch, 2.0*inch],
         ),
-        spacer(0.1),
     ]
 
     # ── 2d ────────────────────────────────────────────────────────────────────
@@ -483,16 +470,15 @@ def build_pdf():
         q_header("Q2d — Best Model Comparison  (10 pts)"),
         body("The chart below compares the three primary model types. "
              "SVD/PMF is highlighted as the top performer."),
-        spacer(0.05),
+        spacer(0.04),
         img(t2_plot, width=7.0*inch),
         caption("Figure 4 — Average RMSE and MAE for all models (5-fold CV). "
                 "SVD/PMF (blue) is best; green border marks the minimum."),
-        spacer(0.08),
+        spacer(0.04),
         body("<b>Conclusion:</b> <b>SVD/PMF is the best model</b> (RMSE = 0.8904, MAE = 0.6860). "
              "It outperforms both CF approaches because latent-factor models capture global "
              "user–item interaction patterns beyond simple pairwise similarity. Among "
              "neighbourhood methods, Item-CF with MSD performs best (RMSE = 0.9346)."),
-        spacer(0.1),
     ]
 
     story.append(PageBreak())
@@ -500,23 +486,23 @@ def build_pdf():
     # ── 2e ────────────────────────────────────────────────────────────────────
     story += [
         section_banner("TASK 2 (continued) — Q2e, Q2f, Q2g"),
-        spacer(0.15),
+        spacer(0.08),
         q_header("Q2e — Impact of Similarity Metric on User-CF & Item-CF  (10 pts)"),
         body("Three similarity metrics were tested at K=40: "
              "<b>Cosine</b> (angle between rating vectors), "
              "<b>MSD</b> (1 / (1 + mean squared difference)), and "
              "<b>Pearson</b> (correlation coefficient)."),
-        spacer(0.05),
+        spacer(0.04),
         styled_table(
             ["Model", "Cosine RMSE", "MSD RMSE", "Pearson RMSE"],
             [["User-CF", "0.9931", "0.9678", "0.9983"],
              ["Item-CF", "0.9951", "0.9346", "0.9891"]],
             col_widths=[1.75*inch, 1.75*inch, 1.75*inch, 1.75*inch],
         ),
-        spacer(0.08),
+        spacer(0.04),
         img(sim_plot, width=7.0*inch),
         caption("Figure 5 — Effect of similarity metric on RMSE and MAE for User-CF and Item-CF (K=40)."),
-        spacer(0.08),
+        spacer(0.04),
         body("<b>Analysis:</b>"),
         bullet("<b>MSD performs best</b> for both User-CF (0.9678) and Item-CF (0.9346). "
                "It directly measures the average squared difference in ratings over common "
@@ -528,7 +514,6 @@ def build_pdf():
         bullet("<b>Is the impact consistent?</b> Yes — MSD ranks first for both User-CF "
                "and Item-CF. The relative ordering (MSD > Cosine ≈ Pearson) is consistent, "
                "though the magnitude of improvement is larger for Item-CF."),
-        spacer(0.1),
     ]
 
     # ── 2f ────────────────────────────────────────────────────────────────────
@@ -536,7 +521,7 @@ def build_pdf():
         q_header("Q2f — Impact of Number of Neighbours K  (10 pts)"),
         body("K was varied from 5 to 80 using cosine similarity. "
              "5-fold cross-validation was applied at each K value."),
-        spacer(0.05),
+        spacer(0.04),
         styled_table(
             ["K", "User-CF RMSE", "Item-CF RMSE"],
             [["5",  "1.0440", "1.1009"],
@@ -546,10 +531,10 @@ def build_pdf():
              ["80", "0.9937", "0.9808"]],
             col_widths=[2.3*inch, 2.3*inch, 2.4*inch],
         ),
-        spacer(0.08),
+        spacer(0.04),
         img(k_plot, width=7.0*inch),
         caption("Figure 6 — Effect of K on RMSE and MAE for User-CF and Item-CF (cosine similarity)."),
-        spacer(0.08),
+        spacer(0.04),
         body("<b>Analysis:</b>"),
         bullet("Both models improve significantly as K increases from 5 → 20. Very small K "
                "(e.g., 5) leads to high variance — predictions rely on too few neighbours."),
@@ -557,36 +542,35 @@ def build_pdf():
                "introduces dissimilar users that add noise."),
         bullet("Item-CF continues improving up to K = 80, suggesting item similarities "
                "are more stable across users."),
-        spacer(0.1),
     ]
 
     # ── 2g ────────────────────────────────────────────────────────────────────
     story += [
         q_header("Q2g — Best K for User-CF vs Item-CF  (10 pts)"),
-        spacer(0.05),
+        spacer(0.04),
         styled_table(
             ["Model", "Best K", "Best RMSE", "Observation"],
             [["User-CF", "K = 40", "0.9931", "Plateaus after K=40"],
              ["Item-CF", "K = 80", "0.9808", "Still improving at K=80"]],
             col_widths=[1.6*inch, 1.4*inch, 1.4*inch, 2.6*inch],
         ),
-        spacer(0.08),
+        spacer(0.04),
         body("<b>Conclusion:</b> The best K values are <b>not the same</b>. User-CF reaches "
              "its optimum at K = 40, while Item-CF benefits from a larger neighbourhood "
              "of K = 80. This is because item rating profiles are denser and more consistent "
              "across users — popular items receive many ratings, providing reliable similarity "
              "signals even at large K. User profiles, by contrast, are sparser and noisier, "
              "so a smaller K prevents averaging over dissimilar users."),
-        spacer(0.15),
+        spacer(0.06),
         hr(),
     ]
 
     # ── Code link ─────────────────────────────────────────────────────────────
     story += [
-        spacer(0.1),
+        spacer(0.06),
         body("<b>Code Repository:</b> All code for this assignment is available at:"),
         Paragraph(
-            "<font color='#1a4fa0'><u>https://github.com/brijeshkumar03/HW3_CSE572_BrijeshKumar</u></font>",
+            "<font color='#1a4fa0'><u>https://github.com/Brijesh03032001/HW3_CSE572_BrijeshKumar</u></font>",
             ParagraphStyle("link", fontSize=10, fontName="Helvetica",
                            textColor=BLUE, spaceBefore=4, spaceAfter=4)
         ),
